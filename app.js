@@ -3,11 +3,16 @@ const app = express(); // requiring express
 const mongoose = require("mongoose"); // requiring mongoose
 const Listing = require("./models/listing"); // requiring the listing model
 const path = require("path"); // requiring path module
+const methodOverride = require("method-override"); // requiring method-override
+const ejsMate = require("ejs-mate"); // requiring ejs-mate
+
+
 app.set("view engine", "ejs"); // setting the view engine to ejs
 app.set("views", path.join(__dirname, "views")); // setting the views directory
 app.use(express.urlencoded({ extended: true })); // middleware to parse the request body
-const methodOverride = require("method-override"); // requiring method-override
 app.use(methodOverride("_method")); // using method-override to override the method
+app.engine("ejs",ejsMate);
+app.use(express.static(path.join(__dirname, "public"))); // serving static files from the public directory
 
 const Mongo_URL = "mongodb://127.0.0.1:27017/BookE"; // connecting to mongoDB
 
